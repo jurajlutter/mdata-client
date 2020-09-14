@@ -1,10 +1,5 @@
 
-VERSION = 0.0.1
-
-CC = gcc
-
-CTFMERGE = /bin/true
-CTFCONVERT = /bin/true
+VERSION = 0.0.2
 
 GNUTAR = tar
 
@@ -15,7 +10,7 @@ PLATFORM_OK = false
 CFILES = dynstr.c proto.c common.c base64.c crc32.c reqid.c
 OBJS = $(CFILES:%.c=%.o)
 HDRS = dynstr.h plat.h proto.h common.h base64.h crc32.h reqid.h
-CFLAGS = -I$(PWD) -Wall -Wextra -Werror -g -O2
+CFLAGS += -I$(PWD) -Wall -Wextra -Werror -g -O2
 LDLIBS =
 
 BINDIR = /usr/sbin
@@ -62,8 +57,6 @@ PKGNAME = joyent-mdata-client
 endif
 
 ifeq ($(UNAME_S),FreeBSD)
-CC = cc
-
 CTFMERGE = /usr/bin/true
 CTFCONVERT = /usr/bin/true
 
@@ -101,6 +94,14 @@ endif
 ifeq ($(PLATFORM_OK),false)
 $(error Unknown platform: $(UNAME_S))
 endif
+
+#
+# Fallback values
+#
+
+CC ?= gcc
+CTFMERGE ?= /bin/true
+CTFCONVERT ?= /bin/true
 
 #
 # Build Targets
